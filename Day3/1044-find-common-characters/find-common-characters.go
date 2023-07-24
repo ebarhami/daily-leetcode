@@ -18,11 +18,6 @@ func commonChars(words []string) []string {
     return answer
 }
 
-func min(a, b int) int {
-    if a < b {return a}
-    return b
-} 
-
 func getCount(s string) map[byte]int {
     count := make(map[byte]int)
 
@@ -31,3 +26,8 @@ func getCount(s string) map[byte]int {
     }
     return count
 }
+
+func min(a, b int) int {
+    if a < b {return a}
+    return b
+} 
