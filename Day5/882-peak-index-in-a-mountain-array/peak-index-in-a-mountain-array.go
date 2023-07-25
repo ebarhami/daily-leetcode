@@ -3,17 +3,12 @@ func peakIndexInMountainArray(arr []int) int {
     maks, idx := 0, 0
     for l <= r {
         mid := (l+r)/2
-        goLeft := false
         if arr[mid] > maks {
             maks = arr[mid]
             idx = mid
         }
-        if mid > 0 && (arr[mid] < arr[mid-1]) {
-            goLeft = true
-        } else if mid < len(arr)-1 && (arr[mid] > arr[mid+1]) {
-            goLeft = true
-        }
 
+        goLeft := (mid > 0 && (arr[mid] < arr[mid-1])) || (mid < len(arr)-1 && (arr[mid] > arr[mid+1]))
         if goLeft {
             r = mid-1
         } else {
