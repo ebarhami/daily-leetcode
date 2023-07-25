@@ -1,6 +1,5 @@
 func peakIndexInMountainArray(arr []int) int {
-    l, r := 0, len(arr)-1
-    maks, idx := 0, 0
+    l, r, maks, idx := 0, len(arr)-1, 0, 0
     for l <= r {
         mid := (l+r)/2
         if arr[mid] > maks {
