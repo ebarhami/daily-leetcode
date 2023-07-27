@@ -1,46 +1,48 @@
 func backspaceCompare(s string, t string) bool {
-    si := len(s)-1
-    ti := len(t)-1
+    i, j := len(s)-1, len(t)-1
+    for i >= 0 && j >= 0 {
+        i = getIndexAfterBackspace(s, i)
+        j = getIndexAfterBackspace(t, j)
 
-    // iterate from last to first character for both strings
-    for si >= 0 && ti >= 0 {
+        fmt.Printf("%d %d\n", i, j)
 
-        si = clearBackspaces(s, si)
-        ti = clearBackspaces(t, ti)
-        
-        // if current characters are not same after taking care
-        // of the end backspaces, strings are not same
-        if si >= 0 && ti >= 0 && s[si] != t[ti] {
+        if i>=0 && j >= 0 && s[i] != t[j] {
             return false
         }
 
-        si -= 1
-        ti -= 1
+        i--
+        j--
     }
+    i = getIndexAfterBackspace(s, i)
+    j = getIndexAfterBackspace(t, j)
 
-    // clear any final backspaces remaining
-    si = clearBackspaces(s, si)
-    ti = clearBackspaces(t, ti)
-
-    return si == ti
+    return i == j
 }
 
-// given a string s and a position i, decrement i to the point where
-// s[i] won't be deleted/backspaced
-func clearBackspaces(s string, i int) int {
-    backspacesCnt := 0
-    // keep track of backspaces and apply them by decrementing i
-    for i >= 0 && (backspacesCnt > 0 || s[i] == '#') {
-        if s[i] == '#' {
-            // we'll take care of this in future loop iterations
-            backspacesCnt++
-        } else {
-            // we're taking care of an earlier backspace in this iteration
-            backspacesCnt--
-        }
+func getIndexAfterBackspace(s string, i int) int {
+    counter := 0
+    for i >= 0 && s[i] == '#' {
+        counter = 1
         i--
+        for i>=0 && counter > 0 {
+            if s[i] == '#' {
+                counter++
+            } else {
+                counter--
+            }
+            i--
+        }
     }
-
-    // we've reached a point where s[i] is neither a backspace nor affected by a backspace
     return i
 }
+
+/*
+i,j = n-1, n-1
+abc## <- i
+ab# <- j
+
+cntBackspace = 0
+i, j = 0
+
+
+*/
