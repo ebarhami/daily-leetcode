@@ -7,18 +7,26 @@ func longestCommonSubsequence(text1 string, text2 string) int {
         }
     }
 
-    return solve(0,0,dp,text1, text2)
+    return solve(text1, text2, 0, 0, dp)
 }
 
-func solve(i, j int, dp [][]int, text1, text2 string) int {
-    if i >= len(text1) || j >= len(text2) {return 0}
+func solve(a, b string, i, j int, dp [][]int) int {
+    if i >= len(a) || j >= len(b) {
+        return 0
+    }
 
-    if dp[i][j] > -1 {return dp[i][j]}
-    if text1[i] == text2[j] {
-        dp[i][j] = 1 + solve(i+1, j+1, dp, text1, text2)
+    if dp[i][j] != -1 {
         return dp[i][j]
     }
-    dp[i][j] = max(solve(i+1, j, dp, text1, text2), solve(i, j+1, dp, text1, text2))
+
+    if a[i] == b[j] {
+        dp[i][j] = 1 + solve(a,b,i+1,j+1,dp)
+        return dp[i][j]
+    }
+    moveA := solve(a,b,i+1,j,dp)
+    moveB := solve(a,b,i,j+1,dp)
+
+    dp[i][j] = max(moveA, moveB)
     return dp[i][j]
 }
 
