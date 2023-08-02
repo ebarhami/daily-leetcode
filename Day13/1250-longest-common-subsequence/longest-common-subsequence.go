@@ -19,14 +19,14 @@ func solve(a, b string, i, j int, dp [][]int) int {
         return dp[i][j]
     }
 
+    equal := 0
     if a[i] == b[j] {
-        dp[i][j] = 1 + solve(a,b,i+1,j+1,dp)
-        return dp[i][j]
+        equal = 1 + solve(a,b,i+1,j+1,dp)
     }
     moveA := solve(a,b,i+1,j,dp)
     moveB := solve(a,b,i,j+1,dp)
 
-    dp[i][j] = max(moveA, moveB)
+    dp[i][j] = max(equal, max(moveA, moveB))
     return dp[i][j]
 }
 
