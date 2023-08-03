@@ -7,7 +7,11 @@
  * }
  */
 func bstFromPreorder(preorder []int) *TreeNode {
-    if len(preorder) == 0 {return nil}
+    if len(preorder) == 0 {
+        return nil
+    } else if len(preorder) == 1 {
+        return &TreeNode{Val:preorder[0]}
+    }
 
     node := &TreeNode{Val:preorder[0]}
 
