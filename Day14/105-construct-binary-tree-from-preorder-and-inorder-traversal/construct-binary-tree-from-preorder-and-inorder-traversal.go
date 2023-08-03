@@ -18,9 +18,9 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 
     node := &TreeNode{
         Val: preorder[0],
-        Left: buildTree(preorder[1:idx+1], inorder[:idx]),
-        Right: buildTree(preorder[idx+1:], inorder[idx+1:]),
     }
+    node.Left = buildTree(preorder[1:idx+1], inorder[:idx])
+    node.Right = buildTree(preorder[idx+1:], inorder[idx+1:])
     return node
 }
 
