@@ -17,8 +17,8 @@ func connect(root *Node) *Node {
             root.Right.Next = root.Next.Left
         }
     }
-    connect(root.Right)
     connect(root.Left)
+    connect(root.Right)
 
     return root
 }
