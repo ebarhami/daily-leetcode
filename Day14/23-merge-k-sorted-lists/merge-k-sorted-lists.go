@@ -7,12 +7,22 @@
  */
 func mergeKLists(lists []*ListNode) *ListNode {
     if len(lists) == 0 {return nil}
-    answer := lists[0]
-    for i:=1;i<len(lists);i++{
-        answer = mergeTwoLists(answer, lists[i])
+    
+    for len(lists) > 1 {
+        newLists := make([]*ListNode, 0)
+        for i:=0;i<len(lists);i+=2{
+            first := lists[i]
+            var second *ListNode
+            if i+1 < len(lists) {
+                second = lists[i+1]
+            }
+            newLists = append(newLists, mergeTwoLists(first,second))
+        }
+        lists = newLists
     }
+    
 
-    return answer
+    return lists[0]
 }
 
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
