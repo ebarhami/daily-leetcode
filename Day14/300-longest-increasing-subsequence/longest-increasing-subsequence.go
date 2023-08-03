@@ -1,26 +1,38 @@
 func lengthOfLIS(nums []int) int {
-    dp := make([]int, len(nums))
-    for i:=0;i<len(nums);i++{
-        dp[i] = 1
-    }
+    arr := make([]int, 0)
 
-    dp[0] = 1 
-    for i:=1;i<len(nums);i++{
-        for j:=0;j<i;j++{
-            if nums[i] > nums[j] {
-                dp[i] = max(dp[i], dp[j] + 1)
-            }
+    for _, num := range nums {
+        if len(arr) == 0 || arr[len(arr)-1] < num {
+            arr = append(arr, num)
+        } else {
+            i := findPos(arr, num)
+            arr[i] = num
         }
     }
+    return len(arr)
 
-    answer := 0
-    for i:=0;i<len(nums);i++{
-        answer = max(answer, dp[i])
+}
+
+func findPos(arr []int, x int) int {
+    l, r := 0, len(arr)-1
+
+    for l < r {
+        mid := (l+r)/2
+        if arr[mid] < x {
+            l = mid+1
+        } else if arr[mid] >= x {
+            r = mid
+        }
     }
-    return answer
+    return l
 }
 
-func max(a, b int) int {
-    if a > b {return a}
-    return b
-}
+/*
+10,9,2,5,3,7,101,18, 1, 2, 3, 4, 5, 6, 7, 8
+
+arr [1, 2, 3, 18,]
+
+
+
+*/
+
