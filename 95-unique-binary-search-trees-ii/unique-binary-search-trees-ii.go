@@ -13,28 +13,19 @@ func generateTrees(n int) []*TreeNode {
 }
 
 func helper(min, max int) []*TreeNode {
-    if min > max { return nil}
+    if min > max { return []*TreeNode{nil}}
     if min == max { return []*TreeNode{{Val:min}} }
 
     answer := make([]*TreeNode, 0)
     for i:=min;i<=max;i++{
         left := helper(min, i-1)
         right := helper(i+1, max)
-        if left == nil {
+
+        for _, l := range left {
             for _, r := range right {
-                answer = append(answer, &TreeNode{Val: i, Right: r})
+                answer = append(answer, &TreeNode{Val: i, Left: l, Right: r})
             }
-        } else if right == nil {
-            for _, l := range left {
-                answer = append(answer, &TreeNode{Val: i, Left: l})
-            }
-        } else {
-            for _, l := range left {
-                for _, r := range right {
-                    answer = append(answer, &TreeNode{Val: i, Left: l, Right: r})
-                }
-            }
-        }   
+        }
     }
     return answer
 }
