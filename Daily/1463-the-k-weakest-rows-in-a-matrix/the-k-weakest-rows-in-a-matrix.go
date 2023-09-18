@@ -3,7 +3,6 @@ func kWeakestRows(mat [][]int, k int) []int {
     for i:=0;i<len(mat);i++{
         score := count(mat[i])
         scoreByIdx[i] = []int{i, score}
-        fmt.Printf("%d : score %d\n", i, score)
     }
 
     sort.SliceStable(scoreByIdx, func(i,j int) bool {
