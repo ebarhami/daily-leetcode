@@ -14,8 +14,7 @@ func pairSum(head *ListNode) int {
     }
 
     // reverse slow.Next
-    newReversed := slow.Next
-    curr, prev, next := newReversed, &ListNode{}, &ListNode{}
+    curr, prev, next := slow.Next, &ListNode{}, &ListNode{}
     for curr != nil {
         next = curr.Next
         curr.Next = prev
