@@ -1,33 +1,30 @@
 func maxActiveSectionsAfterTrade(s string) int {
-	n := len(s)
-	cnt1 := 0
-	for _, c := range s {
-		if c == '1' {
-			cnt1++
-		}
-	}
+    currZero, prevZero := 0, 0
+    total := 0
 
-	zeroBlocks := []int{}
-	i := 0
-	for i < n {
-		start := i
-		for i < n && s[i] == s[start] {
-			i++
-		}
-		if s[start] == '0' {
-			zeroBlocks = append(zeroBlocks, i-start)
-		}
-	}
+    maxZero := 0
+    for i, ch := range s {
+        if ch == '1' {
+            if i > 0 && s[i-1] == '0' {
+                prevZero = currZero
+                currZero = 0
+            }
+            total++
+        } else {
+            currZero++
+        }
+        if prevZero > 0 && currZero > 0 {
+            
+            maxZero = max(maxZero, prevZero + currZero)
+        }
+    } 
 
-	m := len(zeroBlocks)
-	if m < 2 {
-		return cnt1
-	}
+    return total + maxZero
+}
 
-	bestGain := 0 // Optimal Increment
-	for j := 0; j < m-1; j++ {
-		bestGain = max(bestGain, zeroBlocks[j]+zeroBlocks[j+1])
-	}
-
-	return cnt1 + bestGain
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
 }
