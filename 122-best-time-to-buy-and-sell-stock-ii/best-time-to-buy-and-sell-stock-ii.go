@@ -1,14 +1,11 @@
 func maxProfit(prices []int) int {
-    curr := prices[0]
+    curr := math.MaxInt32
     profit := 0
-    for i, price := range prices {
-        if i == 0 {continue}
-        if price < curr {
-            curr = price
-        } else if price > curr {
+    for _, price := range prices {
+        if price > curr {
             profit += (price-curr)
-            curr = price
         }
+        curr = price
     }
     return profit
 }
