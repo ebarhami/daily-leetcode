@@ -1,34 +1,23 @@
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-
-type Point struct {
-    num int
-    idx int
-}
-
 func nodesBetweenCriticalPoints(head *ListNode) []int {
     if head == nil || head.Next == nil {
         return []int{-1, -1}
     }
-    critical := make([]Point, 0)
+
+    critical := make([]int, 0)
 
     var prev *ListNode
     curr := 0
+
     for head != nil {
         next := head.Next
+
         if prev != nil && next != nil {
-            if (head.Val < prev.Val && head.Val < next.Val) || head.Val > prev.Val && head.Val > next.Val {
-                critical = append(critical, Point {
-                    num: head.Val,
-                    idx: curr,
-                })
+            if (head.Val < prev.Val && head.Val < next.Val) ||
+                (head.Val > prev.Val && head.Val > next.Val) {
+                critical = append(critical, curr)
             }
         }
+
         prev = head
         head = head.Next
         curr++
@@ -38,30 +27,16 @@ func nodesBetweenCriticalPoints(head *ListNode) []int {
         return []int{-1, -1}
     }
 
-    minDis, maxDis := 100005, 0
-    minn := minDis
-    sort.Slice(critical, func(i, j int)bool{
-        return critical[i].num < critical[i].num || 
-            (critical[i].num == critical[i].num && critical[i].idx < critical[i].idx) 
-    })
+    minDis := 100005
 
-    for i, _ := range critical {
-        if i > 0 {
-            diff := critical[i].idx - critical[i-1].idx
-            if diff < minn {
-                minn = diff
-                minDis = diff
-            }
+    for i := 1; i < len(critical); i++ {
+        diff := critical[i] - critical[i-1]
+        if diff < minDis {
+            minDis = diff
         }
     }
-    maxDis = critical[len(critical)-1].idx - critical[0].idx
-    
+
+    maxDis := critical[len(critical)-1] - critical[0]
+
     return []int{minDis, maxDis}
 }
-
-
-/*
-8, 1, 9, 10
-
-
-*/
