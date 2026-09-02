@@ -23,7 +23,8 @@ func solve(dp [][]int, s string, l, r int) int {
     }
     
     if s[l] == s[r] {
-        return 2 + solve(dp, s, l+1, r-1)
+        dp[l][r] = 2 + solve(dp, s, l+1, r-1)
+        return dp[l][r]
     }
     goLeft := solve(dp, s, l+1, r)
     goRight := solve(dp, s, l, r-1)
