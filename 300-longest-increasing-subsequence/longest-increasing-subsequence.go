@@ -1,27 +1,37 @@
 func lengthOfLIS(nums []int) int {
-    n := len(nums)
-    LIS := make([]int, n)
+    LISArr := make([]int, 0)
 
-    for i := n-1; i >= 0; i-- {
-        LIS[i] = 1
-        for j := i+1; j<n;j++{
-            if nums[i] < nums[j] {
-                LIS[i] = max(LIS[i], 1 + LIS[j])
-            }
+    for _, num := range nums {
+        if len(LISArr) == 0 || LISArr[len(LISArr)-1] < num {
+            LISArr = append(LISArr, num)
+        } else {
+            pos := getIdx(num, LISArr)
+            LISArr[pos] = num
         }
     }
 
-    answer := 0
-    for _, val := range LIS {
-        answer = max(answer, val)
-    }
-
-    return answer
+    return len(LISArr)
 }
 
-func max(a, b int) int {
-    if a > b {
-        return a
+func getIdx(num int, LISArr []int) int {
+    l, r := 0, len(LISArr) - 1
+    
+    for r > l {
+        mid := (l+r)/2
+        if LISArr[mid] < num {
+            l = mid + 1
+        } else {
+            r = mid
+        }
     }
-    return b
+
+    return r
 }
+
+/*
+
+1 4 6
+5 -> 1 4 5
+3 -> 1 3 6
+
+*/
